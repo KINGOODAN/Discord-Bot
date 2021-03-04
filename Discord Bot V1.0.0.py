@@ -14,9 +14,6 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions
 #---------
 load_dotenv()
-DISCORD_TOKEN = {'Your Bot Token'}
-DISCORD_GUILD=('CUBE EMB TEST SERVER')
-#----------
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 ROLEc = 'Cubeular'
@@ -43,6 +40,9 @@ async def on_member_join(member):
     await member.add_roles(role)
     await member.send(f'Hi {member.name}, welcome to the CUBE Discord server!\n'
     ''' 
+        For list of commands do ?help
+        Please go the the Who's-Who channel and put your real name for safety reasons.
+
         Please read the rules of the server below.
         1. BE RESPECTFUL - We really want to create a safe environment in this server where people can have fun and chat
         2. DON'T SPAM - People are in class during the majority of the day and the constant pinging of discord is VERY distracting try not to spam for the sake of others
@@ -84,8 +84,9 @@ async def SAa(ctx,arg):
     await channel.send('||@everyone||' + ' ' + '\n**Student Association Announcment**' + '\n' + arg)
 #----------     
 @bot.command(pass_context = True)
+@commands.has_role('War Thunder')
 async def warthunder(ctx,arg):
-    channel = bot.get_channel(801166288327016488)
+    channel = bot.get_channel(758445986816589874)
     embed = discord.Embed(title = "**War Thunder LFT**", description = f'\n**{arg}**' + f"\n\n War Thunder LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.0.0', color=discord.Color.blue())
     await channel.send('||<@&808143642954956819>||')
     await channel.send(embed = embed)
@@ -127,12 +128,12 @@ async def helpLFT(ctx):
 #----------
 @bot.command(pass_context = True)
 async def helproles(ctx): 
-    embed = discord.Embed(title = 'Available Role Commands:', description = '\n?ninthgrade\n(please only use if you are a 9th grader!) \n?tenthgrade\n(please only use if you are a 10th grader!)'+ '\n\nRunning CUBEBOT v1.0.0', color=discord.Color.green())
+    embed = discord.Embed(title = 'Available Role Commands:', description = "\n?ninthgrade<@your username>\n(please only use if you are a 9th grader!) \n?tenthgrade<@your username>\n(please only use if you are a 10th grader!) \n?warthunderrole<@your username>"+ '\n\nRunning CUBEBOT v1.0.0', color=discord.Color.green())
     await ctx.send (embed = embed)
 #----------
 @bot.command(pass_context = True)
 async def helpmisc(ctx): 
-    embed = discord.Embed(title = 'Available Commands:', description = '\n?hello'+ '\n\nRunning CUBEBOT v1.0.0', color=discord.Color.green())
+    embed = discord.Embed(title = 'Available Commands:', description = '\n?hello \n?memberlist'+ '\n\nRunning CUBEBOT v1.0.0', color=discord.Color.green())
     await ctx.send (embed = embed)
 #----------
 @bot.command(pass_context = True)
@@ -150,7 +151,7 @@ async def ninthgrade(ctx, member: discord.Member):
             if role in member.roles:
                 await ctx.send(embed=embedalreadyhavegrade)
             else:
-                role = get(ctx.message.guild.roles, id = 805870610156093522)
+                role = get(ctx.message.guild.roles, id = 784553347079208980)
                 await ctx.send (f'{ctx.message.author.mention} you now have the 9th Grade role!') 
                 await ctx.message.author.add_roles(role)
 #----------
@@ -163,7 +164,7 @@ async def tenthgrade(ctx, member: discord.Member):
             if role in member.roles:
                 await ctx.send(embed=embedalreadyhavegrade)
             else:
-                role = get(ctx.message.guild.roles, id = 804046846363828254)
+                role = get(ctx.message.guild.roles, id = 784556769799962625)
                 await ctx.send (f'{ctx.message.author.mention} you now have the 10th Grade role!') 
                 await ctx.message.author.add_roles(role)
 #----------
@@ -222,13 +223,15 @@ async def unmute(ctx, member: discord.Member):
                 await ctx.send(embed=embednot)
                 return
 #-------------------------------------------------
-bot.run('Your Bot Token')
+bot.run('ODAxMTY0MzY0NTQyOTAyMzM0.YAcsdQ.0weria0b1-0TVcXUyqTgd2W2H3k')
+#-------------------------------------------------
+#Thimgs we want to add in the future
 #1 improved help command
 #2 improve/add swear warning
-#3 if you have any grade role you cant use any other grade command
+#3 if you have any grade role you can't use any other grade command
 #4 Xp/level system
 #5 for any command that need an arg sending message to server not terminal
-#6 send message to server if unknow command is used
+#6 send message to server if unknown command is used
 #7 some sort of reward for leveling up with rng(more xp, xp multiplier)and with animation
 #8 more hello like commands
 #9 more game roles
