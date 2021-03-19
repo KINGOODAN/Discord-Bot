@@ -102,6 +102,13 @@ class Announce(commands.Cog, description="These are the commands to make announc
         '''An announcement command for Student Association.'''
         channel = bot.get_channel(783107953095213086) 
         await channel.send('||@everyone||' + ' ' + '\n**Student Association Announcement**' + '\n' + arg)
+    #----------
+    @commands.command()
+    @commands.has_role('Developer')
+    async def Changelog(self, ctx, arg1, arg2, arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10): 
+        """This is the changelog command(developers only!). Individual <args> apply; numbered 1-10. Arg1 is the version, args2-6 are the added features, and args7-10 are the fixes."""
+        channel = bot.get_channel(807326547735347291)
+        await channel.send(f"||<@&821844289993834587>|| \n\n **Bot Update!** \n Version {arg1} \n\n Added: \n-{arg2}\n-{arg3}\n-{arg4}\n-{arg5}\n-{arg6} \n\n Fixed: \n-{arg7}\n-{arg8}\n-{arg9}\n-{arg10}")
 #-------------------------------------------------
 class Suggest_Report(commands.Cog, description="Theses are commands to make suggestions or report things."):
     #----------
@@ -149,6 +156,20 @@ class Miscellaneous(commands.Cog, description="These are Miscellaneous commands.
     async def hello(self,ctx): 
         '''A fun command that say Hello.'''
         await ctx.send(f'Hello {ctx.message.author.mention}!')
+    #----------
+    @commands.command(pass_context = True)
+    async def hi(self,ctx): 
+        '''A fun command that say Hi.'''
+        await ctx.send(f'Hi {ctx.message.author.mention}!')
+    #----------
+    @commands.command()
+    @commands.has_role('Admin, Moderator')
+    async def warn(self,ctx,  member: discord.Member, *, reason = None ):
+        '''This command warns people when they are misbehaving'''
+        embed = discord.Embed(title = "**Warn**", description = f'\n**{member.mention} Has Been Warned**', color=discord.Color.blue())
+        embed.add_field (name = "Reason: ", value = reason + '\n\nRunning CUBEBOT v1.1.0', inline = False )
+        await ctx.send(f"{member.mention}")
+        await ctx.send(embed = embed) 
 #-------------------------------------------------
 class Roles(commands.Cog, description="These are all the commands that you use to get roles."):
     #----------
@@ -242,6 +263,13 @@ class Roles(commands.Cog, description="These are all the commands that you use t
         role = get(ctx.message.guild.roles, id = 819783988721745942)
         await ctx.send (f'{ctx.message.author.mention} you now have the BF1 role!') 
         await ctx.message.author.add_roles(role)
+    #----------
+    @commands.command(pass_context = True)
+    async def DCLProle(self,ctx): 
+        '''This command give you the Developer Change Log Ping role.'''
+        role = get(ctx.message.guild.roles, id = 822611863593287680)
+        await ctx.send (f'{ctx.message.author.mention} you now have the Developer Change Log Ping role!') 
+        await ctx.message.author.add_roles(role)
 #-------------------------------------------------
 class Pings(commands.Cog, description="These are all the different Ping command."):
     #----------     
@@ -251,7 +279,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
         '''This command pings people with your message with the War Thunder role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**War Thunder LFT**", description = f'\n**{arg}**' + f"\n\n War Thunder LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
-        await channel.send('||<@&808143642954956819>||')
+        await channel.send('||<@&818603292120580106>||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
@@ -260,7 +288,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
         '''This command pings people with your message with the COD role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**COD LFT**", description = f'\n**{arg}**' + f"\n\n COD LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
-        await channel.send('||<@&808143642954956819>||')
+        await channel.send('||<@&818603436593381406>||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
@@ -269,7 +297,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
         '''This command pings people with your message with the CSGO role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**CSGO LFT**", description = f'\n**{arg}**' + f"\n\n CSGO LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
-        await channel.send('||<@&808143642954956819>||')
+        await channel.send('||<@&818603636002127903>||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
@@ -278,7 +306,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
         '''This command pings people with your message with the Apex Legends role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**Apex Legends LFT**", description = f'\n**{arg}**' + f"\n\n Apex Legends LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
-        await channel.send('||<@&808143642954956819>||')
+        await channel.send('||<@&818603693314277376>||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
@@ -287,7 +315,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
         '''This command pings people with your message with the League of Legends role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**League of Legends LFT**", description = f'\n**{arg}**' + f"\n\n League of Legends LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
-        await channel.send('||<@&808143642954956819>||')
+        await channel.send('||<@&818603798749511680>||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
@@ -296,7 +324,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
         '''This command pings people with your message with the Super Smash Bros role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**SuperSmashBros LFT**", description = f'\n**{arg}**' + f"\n\n SuperSmashBros LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
-        await channel.send('||<@&808143642954956819>||')
+        await channel.send('||<@&818975670972841995>||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
@@ -305,7 +333,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
         '''This command pings people with your message with the Rainbow Six Siege role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**RainbowSixSiege LFT**", description = f'\n**{arg}**' + f"\n\n RainbowSixSiege LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
-        await channel.send('||<@&808143642954956819>||')
+        await channel.send('||<@818975587527950377>||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
@@ -314,16 +342,25 @@ class Pings(commands.Cog, description="These are all the different Ping command.
         '''This command pings people with your message with the Overwatch role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**Overwatch LFT**", description = f'\n**{arg}**' + f"\n\n Overwatch LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
-        await channel.send('||<@&808143642954956819>||')
+        await channel.send('||<@&818975708708864013>||')
         await channel.send(embed = embed)
     #----------
     @commands.command(pass_context = True)
-    @commands.has_role('BF1role')
+    @commands.has_role('BF1')
     async def BF1ping(self,ctx,arg):
         '''This command pings people with your message with the BF1 role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**BF1 LFT**", description = f'\n**{arg}**' + f"\n\n BF1 LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
-        await channel.send('||<@&808143642954956819>||')
+        await channel.send('||<@&819783988721745942>||')
+        await channel.send(embed = embed)
+    #----------
+    @commands.command(pass_context = True)
+    @commands.has_role('Developer')
+    async def devchangelog(self,ctx,arg):
+        '''This command pings people with your message with the Developer Change Log Ping role'''
+        channel = bot.get_channel(822614039225696314)
+        embed = discord.Embed(title = "**Developer Change Log**", description = f'\n**{arg}**' + f"\n\n Developer Change Log initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
+        await channel.send('||<@&822611863593287680>||')
         await channel.send(embed = embed)
 #-------------------------------------------------
 class Admin(commands.Cog, description="These are commands for the staff of the server."):
@@ -387,17 +424,16 @@ def run():
 if __name__ == "__main__":
     run()
 #-------------------------------------------------
-# BOT TOKEN FOR BESTS SERVER ''
 #Thimgs we want to add in the future
-'''#1 improved help command'''
-#2 improve/add swear warning
-#3 if you have any grade role you can't use any other grade command
-#4 Xp/level system
-#5 for any command that need an arg sending message to server not terminal
-'''#6 send message to server if unknown command is used'''
-#7 some sort of reward for leveling up with rng(more xp, xp multiplier)and with animation
-#8 more hello like commands
-'''#9 more game roles'''
-#10 roll forward roles each year
-#11 game status roles
-'''#12 bug report command'''
+    '''#1 improved help command'''
+    #2 improve/add swear warning
+    #3 if you have any grade role you can't use any other grade command
+    #4 Xp/level system
+    '''#5 for any command that need an arg sending message to server not terminal'''
+    '''#6 send message to server if unknown command is used'''
+    #7 some sort of reward for leveling up with rng(more xp, xp multiplier)and with animation
+    #8 more hello like commands
+    '''#9 more game roles'''
+    '#10 roll forward roles each year'
+    #11 game status roles
+    '''#12 bug report command'''
