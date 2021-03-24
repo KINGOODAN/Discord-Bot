@@ -21,6 +21,7 @@ ROLEc = 'Cubeular'
 ROLEm = 'Muted'
 ROLE9 = '9th Grader'
 ROLE10 = '10th Grader'
+BotVerson = 'V1.2.0'
 #----------
 intents = discord.Intents.default()
 intents.members = True
@@ -30,7 +31,7 @@ client = discord.Client
 bot = commands.Bot(command_prefix='?', intents = intents)
 bot.remove_command('help')
 #-------------------------------------------------
-ending_note = "Running CUBEBOT v1.1.0"
+ending_note = f"Running CUBEBOT {BotVerson}"
 nav = Navigation("⏫", "⏬")
 color = discord.Color.dark_gold()
 bot.help_command = PrettyHelp(navigation=nav, 
@@ -44,7 +45,7 @@ sort_commands=False
 @bot.event
 async def on_member_join(member):
     channel = bot.get_channel (712437956815618071) 
-    embed = discord.Embed(title = 'User Has Joined the Server:sunglasses:', description = f'\n{member} has joined us!' + '\n\nRunning CUBEBOT v1.1.0', color = 0xC0C0C0)
+    embed = discord.Embed(title = 'User Has Joined the Server:sunglasses:', description = f'\n{member} has joined us!' + f'\n\nRunning CUBEBOT {BotVerson}', color = 0xC0C0C0)
     await channel.send(embed = embed)
     role = get(member.guild.roles, name=ROLEc)
     await member.add_roles(role)
@@ -68,19 +69,19 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    await bot.change_presence(activity=discord.Game('CUBEBOT Build v1.1.0! \n Github==> https://github.com/KINGOODAN/Discord-Bot'))
+    await bot.change_presence(activity=discord.Game(f'CUBEBOT Build {BotVerson} \n Github==> https://github.com/KINGOODAN/Discord-Bot'))
 #----------
 @bot.event
 async def on_member_remove(member):
     channel = bot.get_channel (712437956815618071) 
-    embed = discord.Embed(title = 'User Has Left the Server:ghost: ', description = f'\n{member} has left us. Hope they rejoin later!' + '\n\nRunning CUBEBOT v1.1.0', color = 0xC0C0C0)
+    embed = discord.Embed(title = 'User Has Left the Server:ghost: ', description = f'\n{member} has left us. Hope they rejoin later!' + f'\n\nRunning CUBEBOT {BotVerson}', color = 0xC0C0C0)
     await channel.send(embed = embed)
 #----------
 @bot.event
 async def on_command_error(ctx, error):
     await ctx.send(f"An error occured: {str(error)}")
 #-------------------------------------------------
-class Announce(commands.Cog, description="These are the commands to make announcements."):
+class Announcements(commands.Cog, description="These are the commands to make announcements."):
     #----------
     @commands.command(pass_context = True)
     @commands.has_any_role('Moderator', 'Admin')
@@ -105,10 +106,10 @@ class Announce(commands.Cog, description="These are the commands to make announc
     #----------
     @commands.command()
     @commands.has_role('Developer')
-    async def Changelog(self, ctx, arg1, arg2, arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10): 
-        """This is the changelog command(developers only!). Individual <args> apply; numbered 1-10. Arg1 is the version, args2-6 are the added features, and args7-10 are the fixes."""
-        channel = bot.get_channel(807326547735347291)
-        await channel.send(f"||<@&821844289993834587>|| \n\n **Bot Update!** \n Version {arg1} \n\n Added: \n-{arg2}\n-{arg3}\n-{arg4}\n-{arg5}\n-{arg6} \n\n Fixed: \n-{arg7}\n-{arg8}\n-{arg9}\n-{arg10}")
+    async def Changelog(self,ctx,arg1,arg2): 
+        '''This is the changelog command (developers only!). Individual <args> apply; numbered 1 and 2. Arg 1 are the added features, and Arg 2 are the fixes.'''
+        channel = bot.get_channel(822614039225696314)
+        await channel.send (f"||<@&822611863593287680>|| \n\n **Bot Update!** \n Version {BotVerson} \n\n Added: \n-{arg1} \n\n Fixed: \n-{arg2}")
 #-------------------------------------------------
 class Suggest_Report(commands.Cog, description="Theses are commands to make suggestions or report things."):
     #----------
@@ -117,7 +118,7 @@ class Suggest_Report(commands.Cog, description="Theses are commands to make sugg
         '''A command that allows you to report bug with the bot.'''
         channel = bot.get_channel(820104608956678144)
         channel2 = bot.get_channel(820102051866476565)
-        embed = discord.Embed(title = 'Bug Report', description = '\n\n{**arg**}' + f'\n\n Bug Report initiated by {ctx.message.author}'+ '\n\nRunning CUBEBOT v1.1.0')
+        embed = discord.Embed(title = 'Bug Report', description = f'\n\n{arg}' + f'\n\n Bug Report initiated by {ctx.message.author}'+ f'\n\nRunning CUBEBOT {BotVerson}')
         await channel2.send(embed=embed)
         await channel.send("Your report has been logged!")
     #----------
@@ -125,7 +126,7 @@ class Suggest_Report(commands.Cog, description="Theses are commands to make sugg
     async def botsuggest(self,ctx,arg):
         '''A command that lets you make suggestions about the bot.'''
         channel = bot.get_channel(786727940125753374)
-        embed = discord.Embed(title = 'Bot Suggestion', description = f'\n\n**{arg}**' + f'\n\n Poll initiated by {ctx.message.author}'+ '\n\nRunning CUBEBOT v1.1.0')
+        embed = discord.Embed(title = 'Bot Suggestion', description = f'\n\n**{arg}**' + f'\n\n Poll initiated by {ctx.message.author}'+ f'\n\nRunning CUBEBOT {BotVerson}')
         msg = await channel.send(embed=embed)
         emoji = ('⏫')
         emoji2 = ('⏬')
@@ -136,7 +137,7 @@ class Suggest_Report(commands.Cog, description="Theses are commands to make sugg
     async def serversuggest(self,ctx,arg):
         '''A command that lets you make suggestions about the server.'''
         channel = bot.get_channel(786727940125753374)
-        embed = discord.Embed(title = 'Server Suggestion', description = f'\n\n**{arg}**' + f'\n\n Poll initiated by {ctx.message.author}'+ '\n\nRunning CUBEBOT v1.1.0')
+        embed = discord.Embed(title = 'Server Suggestion', description = f'\n\n**{arg}**' + f'\n\n Poll initiated by {ctx.message.author}'+ f'\n\nRunning CUBEBOT {BotVerson}')
         msg = await channel.send(embed=embed)
         emoji = ('⏫')
         emoji2 = ('⏬')
@@ -149,7 +150,7 @@ class Miscellaneous(commands.Cog, description="These are Miscellaneous commands.
     async def memberlist(self,ctx):
         '''A command that gives a list of all the members on the server.'''
         member = '\n  '.join([member.name for member in ctx.guild.members])
-        embed = discord.Embed(title = 'Members:', description = f'{member}' + '\n\nRunning CUBEBOT v1.1.0',color = 0xC0C0C0)
+        embed = discord.Embed(title = 'Members:', description = f'{member}' + f'\n\nRunning CUBEBOT {BotVerson}',color = 0xC0C0C0)
         await ctx.send (embed = embed)
     #----------
     @commands.command(pass_context = True)
@@ -161,15 +162,6 @@ class Miscellaneous(commands.Cog, description="These are Miscellaneous commands.
     async def hi(self,ctx): 
         '''A fun command that say Hi.'''
         await ctx.send(f'Hi {ctx.message.author.mention}!')
-    #----------
-    @commands.command()
-    @commands.has_role('Admin, Moderator')
-    async def warn(self,ctx,  member: discord.Member, *, reason = None ):
-        '''This command warns people when they are misbehaving'''
-        embed = discord.Embed(title = "**Warn**", description = f'\n**{member.mention} Has Been Warned**', color=discord.Color.blue())
-        embed.add_field (name = "Reason: ", value = reason + '\n\nRunning CUBEBOT v1.1.0', inline = False )
-        await ctx.send(f"{member.mention}")
-        await ctx.send(embed = embed) 
 #-------------------------------------------------
 class Roles(commands.Cog, description="These are all the commands that you use to get roles."):
     #----------
@@ -179,7 +171,7 @@ class Roles(commands.Cog, description="These are all the commands that you use t
         guild = ctx.guild
         for role in guild.roles:
             if role.name == "10th Grader":
-                embedalreadyhavegrade = discord.Embed(title="You Already have a grade", description=f"{member.mention} you already have a grade " + '\n\nRunning CUBEBOT v1.1.0', color=discord.Colour.red())
+                embedalreadyhavegrade = discord.Embed(title="You Already have a grade", description=f"{member.mention} you already have a grade " + f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Colour.red())
                 if role in member.roles:
                     await ctx.send(embed=embedalreadyhavegrade)
                 else:
@@ -193,7 +185,7 @@ class Roles(commands.Cog, description="These are all the commands that you use t
         guild = ctx.guild
         for role in guild.roles:
             if role.name == "9th Grader":
-                embedalreadyhavegrade = discord.Embed(title="You Already have a grade", description=f"{member.mention} you already have a grade " + '\n\nRunning CUBEBOT v1.1.0', color=discord.Colour.red())
+                embedalreadyhavegrade = discord.Embed(title="You Already have a grade", description=f"{member.mention} you already have a grade " + f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Colour.red())
                 if role in member.roles:
                     await ctx.send(embed=embedalreadyhavegrade)
                 else:
@@ -278,7 +270,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     async def WarThunderping(self,ctx,arg):
         '''This command pings people with your message with the War Thunder role'''
         channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**War Thunder LFT**", description = f'\n**{arg}**' + f"\n\n War Thunder LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
+        embed = discord.Embed(title = "**War Thunder LFT**", description = f'\n**{arg}**' + f"\n\n War Thunder LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
         await channel.send('||<@&818603292120580106>||')
         await channel.send(embed = embed)
     #----------     
@@ -287,7 +279,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     async def CODping(self,ctx,arg):
         '''This command pings people with your message with the COD role'''
         channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**COD LFT**", description = f'\n**{arg}**' + f"\n\n COD LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
+        embed = discord.Embed(title = "**COD LFT**", description = f'\n**{arg}**' + f"\n\n COD LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
         await channel.send('||<@&818603436593381406>||')
         await channel.send(embed = embed)
     #----------     
@@ -296,7 +288,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     async def CSGOping(self,ctx,arg):
         '''This command pings people with your message with the CSGO role'''
         channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**CSGO LFT**", description = f'\n**{arg}**' + f"\n\n CSGO LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
+        embed = discord.Embed(title = "**CSGO LFT**", description = f'\n**{arg}**' + f"\n\n CSGO LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
         await channel.send('||<@&818603636002127903>||')
         await channel.send(embed = embed)
     #----------     
@@ -305,7 +297,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     async def ApexLegendsping(self,ctx,arg):
         '''This command pings people with your message with the Apex Legends role'''
         channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**Apex Legends LFT**", description = f'\n**{arg}**' + f"\n\n Apex Legends LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
+        embed = discord.Embed(title = "**Apex Legends LFT**", description = f'\n**{arg}**' + f"\n\n Apex Legends LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
         await channel.send('||<@&818603693314277376>||')
         await channel.send(embed = embed)
     #----------     
@@ -314,16 +306,16 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     async def LeagueofLegendsping(self,ctx,arg):
         '''This command pings people with your message with the League of Legends role'''
         channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**League of Legends LFT**", description = f'\n**{arg}**' + f"\n\n League of Legends LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
+        embed = discord.Embed(title = "**League of Legends LFT**", description = f'\n**{arg}**' + f"\n\n League of Legends LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
         await channel.send('||<@&818603798749511680>||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
-    @commands.has_role('SuperSmashBros')
+    @commands.has_role('Super Smash Bros')
     async def SuperSmashBrosping(self,ctx,arg):
         '''This command pings people with your message with the Super Smash Bros role'''
         channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**SuperSmashBros LFT**", description = f'\n**{arg}**' + f"\n\n SuperSmashBros LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
+        embed = discord.Embed(title = "**SuperSmashBros LFT**", description = f'\n**{arg}**' + f"\n\n SuperSmashBros LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
         await channel.send('||<@&818975670972841995>||')
         await channel.send(embed = embed)
     #----------     
@@ -332,7 +324,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     async def RainbowSixSiegeping(self,ctx,arg):
         '''This command pings people with your message with the Rainbow Six Siege role'''
         channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**RainbowSixSiege LFT**", description = f'\n**{arg}**' + f"\n\n RainbowSixSiege LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
+        embed = discord.Embed(title = "**RainbowSixSiege LFT**", description = f'\n**{arg}**' + f"\n\n RainbowSixSiege LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
         await channel.send('||<@818975587527950377>||')
         await channel.send(embed = embed)
     #----------     
@@ -341,7 +333,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     async def Overwatchping(self,ctx,arg):
         '''This command pings people with your message with the Overwatch role'''
         channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**Overwatch LFT**", description = f'\n**{arg}**' + f"\n\n Overwatch LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
+        embed = discord.Embed(title = "**Overwatch LFT**", description = f'\n**{arg}**' + f"\n\n Overwatch LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
         await channel.send('||<@&818975708708864013>||')
         await channel.send(embed = embed)
     #----------
@@ -350,36 +342,27 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     async def BF1ping(self,ctx,arg):
         '''This command pings people with your message with the BF1 role'''
         channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**BF1 LFT**", description = f'\n**{arg}**' + f"\n\n BF1 LFT initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
+        embed = discord.Embed(title = "**BF1 LFT**", description = f'\n**{arg}**' + f"\n\n BF1 LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
         await channel.send('||<@&819783988721745942>||')
-        await channel.send(embed = embed)
-    #----------
-    @commands.command(pass_context = True)
-    @commands.has_role('Developer')
-    async def devchangelog(self,ctx,arg):
-        '''This command pings people with your message with the Developer Change Log Ping role'''
-        channel = bot.get_channel(822614039225696314)
-        embed = discord.Embed(title = "**Developer Change Log**", description = f'\n**{arg}**' + f"\n\n Developer Change Log initiated by {ctx.message.author}"+ '\n\nRunning CUBEBOT v1.1.0', color=discord.Color.blue())
-        await channel.send('||<@&822611863593287680>||')
         await channel.send(embed = embed)
 #-------------------------------------------------
 class Admin(commands.Cog, description="These are commands for the staff of the server."):
     #----------
     @commands.command()
-    @commands.has_any_role('Moderator', 'Admin')
+    @commands.has_any_role('Moderator', 'Admin', 'Trial Moderator')
     async def mute(self,ctx, member: discord.Member, time: int, d, *, reason=None):
         '''A command to mute members.'''
         guild = ctx.guild
         for role in guild.roles:
             if role.name == "Muted":
-                embedalreadymuted = discord.Embed(title="Already Muted", description=f"{member.mention} is already muted " + '\n\nRunning CUBEBOT v1.1.0', color=discord.Colour.red())
+                embedalreadymuted = discord.Embed(title="Already Muted", description=f"{member.mention} is already muted " + f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Colour.red())
                 if role in member.roles:
                     await ctx.send(embed=embedalreadymuted)
                 else:
                     await member.add_roles(role)
                     embed = discord.Embed(title="Muted!", description=f"{member.mention} has been muted ", colour=discord.Colour.red())
                     embed.add_field(name="Reason:", value=reason, inline=False)
-                    embed.add_field(name="Time left for the mute:", value=f'{time} {d}' + '\n\nRunning CUBEBOT v1.1.0', inline=False)
+                    embed.add_field(name="Time left for the mute:", value=f'{time} {d}' + f'\n\nRunning CUBEBOT {BotVerson}', inline=False)
                     await ctx.send(embed=embed)
                     if d == "s":
                         await asyncio.sleep(time)
@@ -391,13 +374,13 @@ class Admin(commands.Cog, description="These are commands for the staff of the s
                         await asyncio.sleep(time*60*60*24)
                     if role in member.roles:
                         await member.remove_roles(role)
-                        embed = discord.Embed(title="Unmuted ", description=f"{member.mention} your mute time is up." + '\n\nRunning CUBEBOT v1.1.0', color=discord.Colour.red())
+                        embed = discord.Embed(title="Unmuted ", description=f"{member.mention} your mute time is up." + f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Colour.red())
                         await ctx.send(embed=embed)
                     else:
                         return
     #----------
     @commands.command()
-    @commands.has_any_role('Moderator', 'Admin')
+    @commands.has_any_role('Moderator', 'Admin', 'Trial Moderator')
     async def unmute(self,ctx, member: discord.Member):
         '''A command to unmute member who are muted.'''
         guild = ctx.guild
@@ -405,16 +388,64 @@ class Admin(commands.Cog, description="These are commands for the staff of the s
             if role.name == "Muted":
                 if role in member.roles:
                     await member.remove_roles(role)
-                    embed = discord.Embed(title="unmuted ", description=f"{member.mention} you have been unmuted" + '\n\nRunning CUBEBOT v1.1.0', color=discord.Colour.red())
+                    embed = discord.Embed(title="unmuted ", description=f"{member.mention} you have been unmuted" + f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Colour.red())
                     await ctx.send(embed=embed)
                 else:
-                    embednot = discord.Embed(title="Not Muted", description=f"{member.mention} is not muted." + '\n\nRunning CUBEBOT v1.1.0', color=discord.Colour.red())
+                    embednot = discord.Embed(title="Not Muted", description=f"{member.mention} is not muted." + f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Colour.red())
                     await ctx.send(embed=embednot)
                     return
+        #----------
+        #----------
+    @commands.command()
+    @commands.has_role('Admin')
+    async def modtrial(self,ctx,member: discord.Member):
+        '''Gives a member mod for 7 days.'''
+        guild = ctx.guild
+        for role in guild.roles:
+            if role.name == "Trial Moderator":
+                embedalreadyintrial = discord.Embed(title="Already in a trial", description=f"{member.mention} is already in a Moderator Trial." + '\n\nRunning CUBEBOT v1.0.0', color=discord.Colour.red())
+                if role in member.roles:
+                    await ctx.send(embed=embedalreadyintrial)
+                else:
+                    await member.add_roles(role)
+                    embed = discord.Embed(title="Moderator Trial Started", description=f"{member.mention} you are now a mod for the next 7 days (this trial can be removed).", colour=discord.Colour.red())
+                    await ctx.send(embed=embed)
+                    await asyncio.sleep(7*60*60*24)
+                    if role in member.roles:
+                        await member.remove_roles(role)
+                        embedtrialover = discord.Embed(title="Moderator Trial Ended", description=f"{member.mention} your Moderator Trial is over." + '\n\nRunning CUBEBOT v1.0.0', color=discord.Colour.red())
+                        await ctx.send(embed=embedtrialover)
+                    else:
+                        return
+    #----------
+    @commands.command()
+    @commands.has_role('Admin')
+    async def removemodtrial(self,ctx, member: discord.Member):
+        '''Removes the mod trial from a member.'''
+        guild = ctx.guild
+        for role in guild.roles:
+            if role.name == "Trial Moderator":
+                if role in member.roles:
+                    await member.remove_roles(role)
+                    embed = discord.Embed(title="Your Moderator Trial Has Ended", description=f"{member.mention} your Moderator Trial has been ended early for more information as to why please contact an Admin." + '\n\nRunning CUBEBOT v1.0.0', color=discord.Colour.red())
+                    await ctx.send(embed=embed)
+                else:
+                    embednot = discord.Embed(title="Not in Moderator Trial", description=f"{member.mention} in not in a Moderator Trial." + '\n\nRunning CUBEBOT v1.0.0', color=discord.Colour.red())
+                    await ctx.send(embed=embednot)
+                    return
+    #----------
+    @commands.command()
+    @commands.has_any_role('Admin', 'Moderator', 'Trial Moderator')
+    async def warn(self,ctx,  member: discord.Member, *, reason = None ):
+        '''This command warns people when they are misbehaving'''
+        embed = discord.Embed(title = "**Warn**", description = f'\n**{member.mention} Has Been Warned**', color=discord.Color.blue())
+        embed.add_field (name = "Reason: ", value = reason + f'\n\nRunning CUBEBOT {BotVerson}', inline = False )
+        await ctx.send(f"{member.mention}")
+        await ctx.send(embed = embed) 
 #-------------------------------------------------
 def run():
     bot.add_cog(Pings(bot))
-    bot.add_cog(Announce(bot))
+    bot.add_cog(Announcements(bot))
     bot.add_cog(Suggest_Report(bot))
     bot.add_cog(Miscellaneous(bot))
     bot.add_cog(Roles(bot))
@@ -426,7 +457,7 @@ if __name__ == "__main__":
 #-------------------------------------------------
 #Thimgs we want to add in the future
     '''#1 improved help command'''
-    #2 improve/add swear warning
+    '''#2 improve/add swear warning'''
     #3 if you have any grade role you can't use any other grade command
     #4 Xp/level system
     '''#5 for any command that need an arg sending message to server not terminal'''
