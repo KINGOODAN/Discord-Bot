@@ -1,4 +1,4 @@
-#CUBE DISCORD BOT V1.1.0
+#CUBE DISCORD BOT V1.2.1
 #Python V3.9.1
 #Discord.py V1.6.0
 #V1.0.0 finished 2/12/2021
@@ -15,13 +15,12 @@ from discord.ext.commands import has_permissions, MissingPermissions
 from pretty_help import PrettyHelp, Navigation
 #---------
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
-GUILD = os.getenv('DISCORD_GUILD')
+TOKEN = open('MAIN_SERVER_TOKEN.txt', 'r').read()
 ROLEc = 'Cubeular'
 ROLEm = 'Muted'
 ROLE9 = '9th Grader'
 ROLE10 = '10th Grader'
-BotVerson = 'V1.2.0'
+BotVerson = 'V1.2.1'
 #----------
 intents = discord.Intents.default()
 intents.members = True
@@ -85,23 +84,26 @@ class Announcements(commands.Cog, description="These are the commands to make an
     #----------
     @commands.command(pass_context = True)
     @commands.has_any_role('Moderator', 'Admin')
-    async def Sa(self,ctx,arg):
+    async def Sa(self,ctx,*,arg):
         '''An announcement command for staff.'''
         channel = bot.get_channel(783107953095213086)
+        await ctx.message.delete()
         await channel.send('||@everyone||' + ' ' + '\n**Staff Announcement**' + '\n' + arg)
     #---------- 
     @commands.command(pass_context = True)
     @commands.has_role('Esports Coordinator')
-    async def ESa(self,ctx,arg):
+    async def ESa(self,ctx,*,arg):
         '''An announcement command for E-Sports.'''
         channel = bot.get_channel(783107953095213086) 
+        await ctx.message.delete()
         await channel.send('||@everyone||' + ' ' + '\n**Esports Announcement**' + '\n' + arg)
     #---------- 
     @commands.command(pass_context = True)
     @commands.has_any_role('Student Association', 'Advisory Senator')
-    async def SAa(self,ctx,arg):
+    async def SAa(self,ctx,*,arg):
         '''An announcement command for Student Association.'''
         channel = bot.get_channel(783107953095213086) 
+        await ctx.message.delete()
         await channel.send('||@everyone||' + ' ' + '\n**Student Association Announcement**' + '\n' + arg)
     #----------
     @commands.command()
@@ -109,12 +111,13 @@ class Announcements(commands.Cog, description="These are the commands to make an
     async def Changelog(self,ctx,arg1,arg2): 
         '''This is the changelog command (developers only!). Individual <args> apply; numbered 1 and 2. Arg 1 are the added features, and Arg 2 are the fixes.'''
         channel = bot.get_channel(822614039225696314)
+        await ctx.message.delete()
         await channel.send (f"||<@&822611863593287680>|| \n\n **Bot Update!** \n Version {BotVerson} \n\n Added: \n-{arg1} \n\n Fixed: \n-{arg2}")
 #-------------------------------------------------
 class Suggest_Report(commands.Cog, description="Theses are commands to make suggestions or report things."):
     #----------
     @commands.command(pass_context = True)
-    async def bugreport(self,ctx,arg):
+    async def bugreport(self,ctx,*,arg):
         '''A command that allows you to report bug with the bot.'''
         channel = bot.get_channel(820104608956678144)
         channel2 = bot.get_channel(820102051866476565)
@@ -123,7 +126,7 @@ class Suggest_Report(commands.Cog, description="Theses are commands to make sugg
         await channel.send("Your report has been logged!")
     #----------
     @commands.command(pass_context = True)
-    async def botsuggest(self,ctx,arg):
+    async def botsuggest(self,ctx,*,arg):
         '''A command that lets you make suggestions about the bot.'''
         channel = bot.get_channel(786727940125753374)
         embed = discord.Embed(title = 'Bot Suggestion', description = f'\n\n**{arg}**' + f'\n\n Poll initiated by {ctx.message.author}'+ f'\n\nRunning CUBEBOT {BotVerson}')
@@ -134,7 +137,7 @@ class Suggest_Report(commands.Cog, description="Theses are commands to make sugg
         await msg.add_reaction(emoji2)
     #----------
     @commands.command(pass_context = True)
-    async def serversuggest(self,ctx,arg):
+    async def serversuggest(self,ctx,*,arg):
         '''A command that lets you make suggestions about the server.'''
         channel = bot.get_channel(786727940125753374)
         embed = discord.Embed(title = 'Server Suggestion', description = f'\n\n**{arg}**' + f'\n\n Poll initiated by {ctx.message.author}'+ f'\n\nRunning CUBEBOT {BotVerson}')
@@ -257,6 +260,20 @@ class Roles(commands.Cog, description="These are all the commands that you use t
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(pass_context = True)
+    async def Minecraftrole(self,ctx): 
+        '''This command give you the Minecraft role.'''
+        role = get(ctx.message.guild.roles, id = 830647386871169065)
+        await ctx.send (f'{ctx.message.author.mention} you now have the Minecraft role!') 
+        await ctx.message.author.add_roles(role)
+    #----------
+    @commands.command(pass_context = True)
+    async def Doomrole(self,ctx): 
+        '''This command give you the Doom role.'''
+        role = get(ctx.message.guild.roles, id = 830647586355806218)
+        await ctx.send (f'{ctx.message.author.mention} you now have the Doom role!') 
+        await ctx.message.author.add_roles(role)
+    #----------
+    @commands.command(pass_context = True)
     async def DCLProle(self,ctx): 
         '''This command give you the Developer Change Log Ping role.'''
         role = get(ctx.message.guild.roles, id = 822611863593287680)
@@ -267,7 +284,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('War Thunder')
-    async def WarThunderping(self,ctx,arg):
+    async def WarThunderping(self,ctx,*,arg):
         '''This command pings people with your message with the War Thunder role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**War Thunder LFT**", description = f'\n**{arg}**' + f"\n\n War Thunder LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
@@ -276,7 +293,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('COD')
-    async def CODping(self,ctx,arg):
+    async def CODping(self,ctx,*,arg):
         '''This command pings people with your message with the COD role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**COD LFT**", description = f'\n**{arg}**' + f"\n\n COD LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
@@ -285,7 +302,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('CSGO')
-    async def CSGOping(self,ctx,arg):
+    async def CSGOping(self,ctx,*,arg):
         '''This command pings people with your message with the CSGO role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**CSGO LFT**", description = f'\n**{arg}**' + f"\n\n CSGO LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
@@ -294,7 +311,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('Apex Legends')
-    async def ApexLegendsping(self,ctx,arg):
+    async def ApexLegendsping(self,ctx,*,arg):
         '''This command pings people with your message with the Apex Legends role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**Apex Legends LFT**", description = f'\n**{arg}**' + f"\n\n Apex Legends LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
@@ -303,7 +320,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('League of Legends')
-    async def LeagueofLegendsping(self,ctx,arg):
+    async def LeagueofLegendsping(self,ctx,*,arg):
         '''This command pings people with your message with the League of Legends role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**League of Legends LFT**", description = f'\n**{arg}**' + f"\n\n League of Legends LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
@@ -312,7 +329,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('Super Smash Bros')
-    async def SuperSmashBrosping(self,ctx,arg):
+    async def SuperSmashBrosping(self,ctx,*,arg):
         '''This command pings people with your message with the Super Smash Bros role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**SuperSmashBros LFT**", description = f'\n**{arg}**' + f"\n\n SuperSmashBros LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
@@ -321,7 +338,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('RainbowSixSiege')
-    async def RainbowSixSiegeping(self,ctx,arg):
+    async def RainbowSixSiegeping(self,ctx,*,arg):
         '''This command pings people with your message with the Rainbow Six Siege role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**RainbowSixSiege LFT**", description = f'\n**{arg}**' + f"\n\n RainbowSixSiege LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
@@ -330,7 +347,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('Overwatch')
-    async def Overwatchping(self,ctx,arg):
+    async def Overwatchping(self,ctx,*,arg):
         '''This command pings people with your message with the Overwatch role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**Overwatch LFT**", description = f'\n**{arg}**' + f"\n\n Overwatch LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
@@ -339,11 +356,29 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     #----------
     @commands.command(pass_context = True)
     @commands.has_role('BF1')
-    async def BF1ping(self,ctx,arg):
+    async def BF1ping(self,ctx,*,arg):
         '''This command pings people with your message with the BF1 role'''
         channel = bot.get_channel(758445986816589874)
         embed = discord.Embed(title = "**BF1 LFT**", description = f'\n**{arg}**' + f"\n\n BF1 LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
         await channel.send('||<@&819783988721745942>||')
+        await channel.send(embed = embed)
+    #----------
+    @commands.command(pass_context = True)
+    @commands.has_role('Minecraft')
+    async def Minecraftping(self,ctx,*,arg):
+        '''This command pings people with your message with the Minecraft role'''
+        channel = bot.get_channel(758445986816589874)
+        embed = discord.Embed(title = "**Minecraft LFT**", description = f'\n**{arg}**' + f"\n\n Minecraft LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send('||<@&830647386871169065>||')
+        await channel.send(embed = embed)
+    #----------
+    @commands.command(pass_context = True)
+    @commands.has_role('Doom')
+    async def Doomping(self,ctx,*,arg):
+        '''This command pings people with your message with the Doom role'''
+        channel = bot.get_channel(758445986816589874)
+        embed = discord.Embed(title = "**Doom LFT**", description = f'\n**{arg}**' + f"\n\n Doom LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send('||<@&830647586355806218>||')
         await channel.send(embed = embed)
 #-------------------------------------------------
 class Admin(commands.Cog, description="These are commands for the staff of the server."):
@@ -450,7 +485,7 @@ def run():
     bot.add_cog(Miscellaneous(bot))
     bot.add_cog(Roles(bot))
     bot.add_cog(Admin(bot))
-    bot.run('YOUR BOT TOKEN')
+    bot.run(TOKEN)
 #-------------------------------------------------
 if __name__ == "__main__":
     run()
