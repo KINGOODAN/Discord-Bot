@@ -20,7 +20,7 @@ ROLEc = 'Cubeular'
 ROLEm = 'Muted'
 ROLE9 = '9th Grader'
 ROLE10 = '10th Grader'
-BotVerson = 'V1.2.1'
+BotVerson = 'V1.2.2'
 #----------
 intents = discord.Intents.default()
 intents.members = True
@@ -53,13 +53,56 @@ async def on_member_join(member):
         For list of commands do ?help
         Please go the the Who's-Who channel and put your real name for safety reasons.
 
-        Please read the rules of the server below.
-        1. BE RESPECTFUL - We really want to create a safe environment in this server where people can have fun and chat
-        2. DON'T SPAM - People are in class during the majority of the day and the constant pinging of discord is VERY distracting try not to spam for the sake of others
-        3. AVOID POLITICS/SENSITIVE SUBJECTS - This is a school server, not a debate club
-        4. STAFF HAVE FINAL SAY, ALWAYS
-        5. IF IT'S NOT MEANT TO BE KIND, IT SHOULD NOT BE SAID
-        6. NO NSFW, EVER! - NSFW is strictly forbidden, even on profile pictures or statuses! I will remove you from the server if you do not comply with this!
+        Rules: 
+
+        (1)Your Account: 
+        1. Inappropriate or offensive avatars, usernames, and statuses are prohibited. 
+        2. Self-advertising through usernames or statuses is not permitted.
+        3. Staff are hereby granted the right to change nicknames if and only if said username or status violates rules(s) (1) or (2) of this section, or rule (1) of Section (3).
+        4. Any user may only hold one account on this server. If we suspect that a user has a secondary account, immediate action will be taken. 
+
+        (2)Server Rules: 
+        1. Discrimination, racist or otherwise offensive jokes, and/or hate speech through text, images, or videos will not be tolerated. 
+        2. Insults, threats, or any offensive content targeted at specific members is strictly not allowed. 
+        3. DDOS, raid, or other such threats will not be tolerated. 
+        4. Please post content in correct channels. 
+        4a. Self-promotions are only allowed in #advertising channel. 
+        5. Do not ask staff to become a moderator, all moderator applications are closed.
+        6. Impersonating staff members, including similar avatars and nicknames is not allowed.
+        7. Political opinions, including links, images, videos, avatars, nicknames, and statuses will not be tolerated. This is a school server.
+        8. Please Direct Message me or an Admin with complaints about staff/server policies.
+        9. Do not leak Direct Messages, locked chats, or sensitive information about this server. 
+
+        (3)Content:
+        1. NSFW content, text, avatars, or usernames/nicknames of any kind is strictly prohibited. 
+        2. Discussing/promoting illegal activity will not be tolerated. 
+        3. Staff reserves the right to remove any content for any reason at any time. 
+        4. Plagiarism, spam, and copypasta are all forbidden.
+
+
+    Punishment System: 
+
+        Tier One - Warning 
+        -Violating Section(1); rule (2). 
+        -Violating Section (2); rule(s) (4/4a), (5), (6), or (8). 
+
+        Tier Two - Mute
+        -Violating Section(2); rule(s) (1), (2), (3), or (7). 
+        -Violating Section(3); rule(s) (2) or (4).
+        -Repeated violations (<2) of the rules outlined in Tier One.
+
+        Tier Three - Kick/Role Removal
+        -Violating Section(1); rule (1).
+        -Violating Section(2); rule (9).
+        -Repeated violations (<4) of the rules outlined in Tier One. 
+        -Repeated violations (<2) of the rules outlined in Tier Two. 
+
+    Tier Four - Ban
+        -Violating Section(1); rule (4)
+        -Violating Section(3); rule (1)
+        -Repeated violations (<5) of the rules outlined in Tier One. 
+        -Repeated violations (<3) of the rules outlined in Tier Two. 
+        -Repeated violations (<1) of the rules outlined in Tier Three.
         ''')
 #----------
 @bot.event
@@ -196,89 +239,96 @@ class Roles(commands.Cog, description="These are all the commands that you use t
                     await ctx.send (f'{ctx.message.author.mention} you now have the 10th Grade role!') 
                     await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="WarThunderrole", aliases=["WarThunderRole"],pass_context = True)
     async def WarThunderrole(self,ctx):
         '''This command give you the War Thunder role.'''
         role = get(ctx.message.guild.roles, id = 818603292120580106)
         await ctx.send (f'{ctx.message.author.mention} you now have the War Thunder role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="CODrole", aliases=["CODRole"],pass_context = True)
     async def CODrole(self,ctx): 
         '''This command give you the COD role.'''
         role = get(ctx.message.guild.roles, id = 818603436593381406)
         await ctx.send (f'{ctx.message.author.mention} you now have the COD role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="CSGOrole", aliases=["CSGORole"],pass_context = True)
     async def CSGOrole(self,ctx): 
         '''This command give you the CSGO role.'''
         role = get(ctx.message.guild.roles, id = 818603636002127903)
         await ctx.send (f'{ctx.message.author.mention} you now have the CSGO role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="ApexLegendsrole", aliases=["ApexLegendsRole"],pass_context = True)
     async def ApexLegendsrole(self,ctx):
         '''This command give you the Apex Legends role.''' 
         role = get(ctx.message.guild.roles, id = 818603693314277376)
         await ctx.send (f'{ctx.message.author.mention} you now have the Apex Legends role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="LeagueofLegendsrole", aliases=["LeagueofLegendsRole"],pass_context = True)
     async def LeagueofLegendsrole(self,ctx): 
         '''This command give you the League of Legends role.'''
         role = get(ctx.message.guild.roles, id = 818603798749511680)
         await ctx.send (f'{ctx.message.author.mention} you now have the League of Legends role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="SuperSmashBrosrole", aliases=["SuperSmashBrosRole"],pass_context = True)
     async def SuperSmashBrosrole(self,ctx): 
         '''This command give you the Super Smash Bros role.'''
         role = get(ctx.message.guild.roles, id = 818975670972841995)
         await ctx.send (f'{ctx.message.author.mention} you now have the SuperSmashBros role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="RainbowSixSiegerole", aliases=["RainbowSixSiegeRole"],pass_context = True)
     async def RainbowSixSiegerole(self,ctx): 
         '''This command give you the Rainbow Six Siege role.'''
         role = get(ctx.message.guild.roles, id = 818975587527950377)
         await ctx.send (f'{ctx.message.author.mention} you now have the RainbowSixSiege role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="Overwatchrole", aliases=["OverwatchRole"],pass_context = True)
     async def Overwatchrole(self,ctx): 
         '''This command give you the Overwatch role.'''
         role = get(ctx.message.guild.roles, id = 818975708708864013)
         await ctx.send (f'{ctx.message.author.mention} you now have the Overwatch role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="BF1role", aliases=["BF1Role"],pass_context = True)
     async def BF1role(self,ctx): 
         '''This command give you the BF1 role.'''
         role = get(ctx.message.guild.roles, id = 819783988721745942)
         await ctx.send (f'{ctx.message.author.mention} you now have the BF1 role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="Minecraftrole", aliases=["MinecraftRole"],pass_context = True)
     async def Minecraftrole(self,ctx): 
         '''This command give you the Minecraft role.'''
         role = get(ctx.message.guild.roles, id = 830647386871169065)
         await ctx.send (f'{ctx.message.author.mention} you now have the Minecraft role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="Doomrole", aliases=["DoomRole"],pass_context = True)
     async def Doomrole(self,ctx): 
         '''This command give you the Doom role.'''
         role = get(ctx.message.guild.roles, id = 830647586355806218)
         await ctx.send (f'{ctx.message.author.mention} you now have the Doom role!') 
         await ctx.message.author.add_roles(role)
     #----------
-    @commands.command(pass_context = True)
+    @commands.command(name="DCLProle", aliases=["DCLPRole"],pass_context = True)
     async def DCLProle(self,ctx): 
         '''This command give you the Developer Change Log Ping role.'''
         role = get(ctx.message.guild.roles, id = 822611863593287680)
         await ctx.send (f'{ctx.message.author.mention} you now have the Developer Change Log Ping role!') 
         await ctx.message.author.add_roles(role)
+    #----------
+    @commands.command(name="removerole", aliases=["removeRole"],pass_context = True)
+    async def removerole(self,ctx,arg): 
+        '''This command lets you remove roles from yourself using role ID's.'''
+        role = get(ctx.message.guild.roles, id = int(arg))
+        await ctx.message.author.remove_roles(role)
+        await ctx.send (f'{ctx.message.author.mention} your role has been removed!')
 #-------------------------------------------------
 class Pings(commands.Cog, description="These are all the different Ping command."):
     #----------     
@@ -337,7 +387,7 @@ class Pings(commands.Cog, description="These are all the different Ping command.
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
-    @commands.has_role('RainbowSixSiege')
+    @commands.has_role('Rainbow Six Siege')
     async def RainbowSixSiegeping(self,ctx,*,arg):
         '''This command pings people with your message with the Rainbow Six Siege role'''
         channel = bot.get_channel(758445986816589874)
@@ -490,7 +540,7 @@ def run():
 if __name__ == "__main__":
     run()
 #-------------------------------------------------
-#Thimgs we want to add in the future
+#Things we want to add in the future
     '''#1 improved help command'''
     '''#2 improve/add swear warning'''
     #3 if you have any grade role you can't use any other grade command
