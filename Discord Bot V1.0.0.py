@@ -21,6 +21,18 @@ ROLEm = 'Muted'
 ROLE9 = '9th Grader'
 ROLE10 = '10th Grader'
 BotVerson = 'V1.2.2'
+WT = "War Thunder"
+COD = "COD"
+CSGO = "CSGO"
+AL = "Apex Legends"
+LOL = "League of Legends"
+RSS = "Rainbow Six Siege"
+SSB = "Super Smash Bros"
+O = "Overwatch"
+BF1 = "BF1"
+M = "Minecraft"
+D = "Doom"
+DCP = "Developer Changelog Ping"
 #----------
 intents = discord.Intents.default()
 intents.members = True
@@ -43,7 +55,7 @@ sort_commands=False
 #-------------------------------------------------
 @bot.event
 async def on_member_join(member):
-    channel = bot.get_channel (712437956815618071) 
+    channel = discord.utils.get(member.guild.channels, name="joins") 
     embed = discord.Embed(title = 'User Has Joined the Server:sunglasses:', description = f'\n{member} has joined us!' + f'\n\nRunning CUBEBOT {BotVerson}', color = 0xC0C0C0)
     await channel.send(embed = embed)
     role = get(member.guild.roles, name=ROLEc)
@@ -115,7 +127,7 @@ async def on_ready():
 #----------
 @bot.event
 async def on_member_remove(member):
-    channel = bot.get_channel (712437956815618071) 
+    channel = discord.utils.get(member.guild.channels, name="joins") 
     embed = discord.Embed(title = 'User Has Left the Server:ghost: ', description = f'\n{member} has left us. Hope they rejoin later!' + f'\n\nRunning CUBEBOT {BotVerson}', color = 0xC0C0C0)
     await channel.send(embed = embed)
 #----------
@@ -129,7 +141,7 @@ class Announcements(commands.Cog, description="These are the commands to make an
     @commands.has_any_role('Moderator', 'Admin')
     async def Sa(self,ctx,*,arg):
         '''An announcement command for staff.'''
-        channel = bot.get_channel(783107953095213086)
+        channel = discord.utils.get(ctx.guild.channels, name="announcements")
         await ctx.message.delete()
         await channel.send('||@everyone||' + ' ' + '\n**Staff Announcement**' + '\n' + arg)
     #---------- 
@@ -137,7 +149,7 @@ class Announcements(commands.Cog, description="These are the commands to make an
     @commands.has_role('Esports Coordinator')
     async def ESa(self,ctx,*,arg):
         '''An announcement command for E-Sports.'''
-        channel = bot.get_channel(783107953095213086) 
+        channel = discord.utils.get(ctx.guild.channels, name="announcements") 
         await ctx.message.delete()
         await channel.send('||@everyone||' + ' ' + '\n**Esports Announcement**' + '\n' + arg)
     #---------- 
@@ -145,7 +157,7 @@ class Announcements(commands.Cog, description="These are the commands to make an
     @commands.has_any_role('Student Association', 'Advisory Senator')
     async def SAa(self,ctx,*,arg):
         '''An announcement command for Student Association.'''
-        channel = bot.get_channel(783107953095213086) 
+        channel = discord.utils.get(ctx.guild.channels, name="announcements") 
         await ctx.message.delete()
         await channel.send('||@everyone||' + ' ' + '\n**Student Association Announcement**' + '\n' + arg)
     #----------
@@ -153,25 +165,25 @@ class Announcements(commands.Cog, description="These are the commands to make an
     @commands.has_role('Developer')
     async def Changelog(self,ctx,arg1,arg2): 
         '''This is the changelog command (developers only!). Individual <args> apply; numbered 1 and 2. Arg 1 are the added features, and Arg 2 are the fixes.'''
-        channel = bot.get_channel(822614039225696314)
+        d = get(ctx.guild.roles, name="Developer Changelog Ping")
+        channel = discord.utils.get(ctx.guild.channels, name="bot-change-log")
         await ctx.message.delete()
-        await channel.send (f"||<@&822611863593287680>|| \n\n **Bot Update!** \n Version {BotVerson} \n\n Added: \n-{arg1} \n\n Fixed: \n-{arg2}")
+        await channel.send (f"||{d.mention}|| \n\n **Bot Update!** \n Version {BotVerson} \n\n Added: \n-{arg1} \n\n Fixed: \n-{arg2}")
 #-------------------------------------------------
 class Suggest_Report(commands.Cog, description="Theses are commands to make suggestions or report things."):
     #----------
     @commands.command(pass_context = True)
     async def bugreport(self,ctx,*,arg):
         '''A command that allows you to report bug with the bot.'''
-        channel = bot.get_channel(820104608956678144)
-        channel2 = bot.get_channel(820102051866476565)
+        channel = discord.utils.get(ctx.guild.channels, name="bug-report-output")
         embed = discord.Embed(title = 'Bug Report', description = f'\n\n{arg}' + f'\n\n Bug Report initiated by {ctx.message.author}'+ f'\n\nRunning CUBEBOT {BotVerson}')
-        await channel2.send(embed=embed)
-        await channel.send("Your report has been logged!")
+        await channel.send(embed=embed)
+        await ctx.send("Your report has been logged!")
     #----------
     @commands.command(pass_context = True)
     async def botsuggest(self,ctx,*,arg):
         '''A command that lets you make suggestions about the bot.'''
-        channel = bot.get_channel(786727940125753374)
+        channel = discord.utils.get(ctx.guild.channels, name="server-suggestions")
         embed = discord.Embed(title = 'Bot Suggestion', description = f'\n\n**{arg}**' + f'\n\n Poll initiated by {ctx.message.author}'+ f'\n\nRunning CUBEBOT {BotVerson}')
         msg = await channel.send(embed=embed)
         emoji = ('⏫')
@@ -182,7 +194,7 @@ class Suggest_Report(commands.Cog, description="Theses are commands to make sugg
     @commands.command(pass_context = True)
     async def serversuggest(self,ctx,*,arg):
         '''A command that lets you make suggestions about the server.'''
-        channel = bot.get_channel(786727940125753374)
+        channel = discord.utils.get(ctx.guild.channels, name="server-suggestions")
         embed = discord.Embed(title = 'Server Suggestion', description = f'\n\n**{arg}**' + f'\n\n Poll initiated by {ctx.message.author}'+ f'\n\nRunning CUBEBOT {BotVerson}')
         msg = await channel.send(embed=embed)
         emoji = ('⏫')
@@ -210,7 +222,7 @@ class Miscellaneous(commands.Cog, description="These are Miscellaneous commands.
         await ctx.send(f'Hi {ctx.message.author.mention}!')
 #-------------------------------------------------
 class Roles(commands.Cog, description="These are all the commands that you use to get roles."):
-    #----------
+    """#----------
     @commands.command(pass_context = True)
     async def ninthgrade(self,ctx, member: discord.Member):
         '''This command give you the Ninth Grader role.'''
@@ -238,95 +250,95 @@ class Roles(commands.Cog, description="These are all the commands that you use t
                     role = get(ctx.message.guild.roles, id = 784556769799962625)
                     await ctx.send (f'{ctx.message.author.mention} you now have the 10th Grade role!') 
                     await ctx.message.author.add_roles(role)
-    #----------
+    """#----------
     @commands.command(name="WarThunderrole", aliases=["WarThunderRole"],pass_context = True)
     async def WarThunderrole(self,ctx):
         '''This command give you the War Thunder role.'''
-        role = get(ctx.message.guild.roles, id = 818603292120580106)
-        await ctx.send (f'{ctx.message.author.mention} you now have the War Thunder role!') 
+        role = get(ctx.guild.roles, name = f"{WT}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {WT} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="CODrole", aliases=["CODRole"],pass_context = True)
     async def CODrole(self,ctx): 
         '''This command give you the COD role.'''
-        role = get(ctx.message.guild.roles, id = 818603436593381406)
-        await ctx.send (f'{ctx.message.author.mention} you now have the COD role!') 
+        role = get(ctx.guild.roles, name = f"{COD}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {COD} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="CSGOrole", aliases=["CSGORole"],pass_context = True)
     async def CSGOrole(self,ctx): 
         '''This command give you the CSGO role.'''
-        role = get(ctx.message.guild.roles, id = 818603636002127903)
-        await ctx.send (f'{ctx.message.author.mention} you now have the CSGO role!') 
+        role = get(ctx.guild.roles, name = f"{CSGO}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {CSGO} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="ApexLegendsrole", aliases=["ApexLegendsRole"],pass_context = True)
     async def ApexLegendsrole(self,ctx):
         '''This command give you the Apex Legends role.''' 
-        role = get(ctx.message.guild.roles, id = 818603693314277376)
-        await ctx.send (f'{ctx.message.author.mention} you now have the Apex Legends role!') 
+        role = get(ctx.guild.roles, name = f"{AL}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {AL} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="LeagueofLegendsrole", aliases=["LeagueofLegendsRole"],pass_context = True)
     async def LeagueofLegendsrole(self,ctx): 
         '''This command give you the League of Legends role.'''
-        role = get(ctx.message.guild.roles, id = 818603798749511680)
-        await ctx.send (f'{ctx.message.author.mention} you now have the League of Legends role!') 
+        role = get(ctx.guild.roles, name = f"{LOL}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {LOL} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="SuperSmashBrosrole", aliases=["SuperSmashBrosRole"],pass_context = True)
     async def SuperSmashBrosrole(self,ctx): 
         '''This command give you the Super Smash Bros role.'''
-        role = get(ctx.message.guild.roles, id = 818975670972841995)
-        await ctx.send (f'{ctx.message.author.mention} you now have the SuperSmashBros role!') 
+        role = get(ctx.guild.roles, name = f"{SSB}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {SSB} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="RainbowSixSiegerole", aliases=["RainbowSixSiegeRole"],pass_context = True)
     async def RainbowSixSiegerole(self,ctx): 
         '''This command give you the Rainbow Six Siege role.'''
-        role = get(ctx.message.guild.roles, id = 818975587527950377)
-        await ctx.send (f'{ctx.message.author.mention} you now have the RainbowSixSiege role!') 
+        role = get(ctx.guild.roles, name = f"{RSS}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {RSS} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="Overwatchrole", aliases=["OverwatchRole"],pass_context = True)
     async def Overwatchrole(self,ctx): 
         '''This command give you the Overwatch role.'''
-        role = get(ctx.message.guild.roles, id = 818975708708864013)
-        await ctx.send (f'{ctx.message.author.mention} you now have the Overwatch role!') 
+        role = get(ctx.guild.roles, name = f"{O}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {O} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="BF1role", aliases=["BF1Role"],pass_context = True)
     async def BF1role(self,ctx): 
         '''This command give you the BF1 role.'''
-        role = get(ctx.message.guild.roles, id = 819783988721745942)
-        await ctx.send (f'{ctx.message.author.mention} you now have the BF1 role!') 
+        role = get(ctx.guild.roles, name = f"{BF1}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {BF1} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="Minecraftrole", aliases=["MinecraftRole"],pass_context = True)
     async def Minecraftrole(self,ctx): 
         '''This command give you the Minecraft role.'''
-        role = get(ctx.message.guild.roles, id = 830647386871169065)
-        await ctx.send (f'{ctx.message.author.mention} you now have the Minecraft role!') 
+        role = get(ctx.guild.roles, name = f"{M}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {M} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="Doomrole", aliases=["DoomRole"],pass_context = True)
     async def Doomrole(self,ctx): 
         '''This command give you the Doom role.'''
-        role = get(ctx.message.guild.roles, id = 830647586355806218)
-        await ctx.send (f'{ctx.message.author.mention} you now have the Doom role!') 
+        role = get(ctx.guild.roles, name = f"{D}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {D} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="DCLProle", aliases=["DCLPRole"],pass_context = True)
     async def DCLProle(self,ctx): 
         '''This command give you the Developer Change Log Ping role.'''
-        role = get(ctx.message.guild.roles, id = 822611863593287680)
-        await ctx.send (f'{ctx.message.author.mention} you now have the Developer Change Log Ping role!') 
+        role = get(ctx.guild.roles, name = f"{DCP}")
+        await ctx.send (f'{ctx.message.author.mention} you now have the {DCP} role!') 
         await ctx.message.author.add_roles(role)
     #----------
     @commands.command(name="removerole", aliases=["removeRole"],pass_context = True)
     async def removerole(self,ctx,arg): 
-        '''This command lets you remove roles from yourself using role ID's.'''
-        role = get(ctx.message.guild.roles, id = int(arg))
+        '''This command lets you remove roles from yourself using roles name.'''
+        role = get(ctx.guild.roles, name = f"{arg}")
         await ctx.message.author.remove_roles(role)
         await ctx.send (f'{ctx.message.author.mention} your role has been removed!')
 #-------------------------------------------------
@@ -336,99 +348,110 @@ class Pings(commands.Cog, description="These are all the different Ping command.
     @commands.has_role('War Thunder')
     async def WarThunderping(self,ctx,*,arg):
         '''This command pings people with your message with the War Thunder role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**War Thunder LFT**", description = f'\n**{arg}**' + f"\n\n War Thunder LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@&818603292120580106>||')
+        wt = get(ctx.guild.roles, name = f"{WT}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**War Thunder LFT**", description = f'\n**{arg}**' + f"\n\n {WT} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{wt.mention}||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('COD')
     async def CODping(self,ctx,*,arg):
         '''This command pings people with your message with the COD role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**COD LFT**", description = f'\n**{arg}**' + f"\n\n COD LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@&818603436593381406>||')
+        cod = get(ctx.guild.roles, name = f"{COD}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**COD LFT**", description = f'\n**{arg}**' + f"\n\n {COD} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{cod.mention}||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('CSGO')
     async def CSGOping(self,ctx,*,arg):
         '''This command pings people with your message with the CSGO role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**CSGO LFT**", description = f'\n**{arg}**' + f"\n\n CSGO LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@&818603636002127903>||')
+        csgo = get(ctx.guild.roles, name = f"{CSGO}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**CSGO LFT**", description = f'\n**{arg}**' + f"\n\n {CSGO} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{csgo.mention}||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('Apex Legends')
     async def ApexLegendsping(self,ctx,*,arg):
         '''This command pings people with your message with the Apex Legends role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**Apex Legends LFT**", description = f'\n**{arg}**' + f"\n\n Apex Legends LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@&818603693314277376>||')
+        al = get(ctx.guild.roles, name = f"{AL}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**Apex Legends LFT**", description = f'\n**{arg}**' + f"\n\n {AL} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{al.mention}||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('League of Legends')
     async def LeagueofLegendsping(self,ctx,*,arg):
         '''This command pings people with your message with the League of Legends role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**League of Legends LFT**", description = f'\n**{arg}**' + f"\n\n League of Legends LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@&818603798749511680>||')
+        lol = get(ctx.guild.roles, name = f"{LOL}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**League of Legends LFT**", description = f'\n**{arg}**' + f"\n\n {LOL} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{lol.mention}||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('Super Smash Bros')
     async def SuperSmashBrosping(self,ctx,*,arg):
         '''This command pings people with your message with the Super Smash Bros role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**SuperSmashBros LFT**", description = f'\n**{arg}**' + f"\n\n SuperSmashBros LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@&818975670972841995>||')
+        ssb = get(ctx.guild.roles, name = f"{SSB}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**SuperSmashBros LFT**", description = f'\n**{arg}**' + f"\n\n {SSB} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{ssb.mention}||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('Rainbow Six Siege')
     async def RainbowSixSiegeping(self,ctx,*,arg):
         '''This command pings people with your message with the Rainbow Six Siege role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**RainbowSixSiege LFT**", description = f'\n**{arg}**' + f"\n\n RainbowSixSiege LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@818975587527950377>||')
+        rss = get(ctx.guild.roles, name = f"{RSS}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**RainbowSixSiege LFT**", description = f'\n**{arg}**' + f"\n\n {RSS} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{rss.mention}||')
         await channel.send(embed = embed)
     #----------     
     @commands.command(pass_context = True)
     @commands.has_role('Overwatch')
     async def Overwatchping(self,ctx,*,arg):
         '''This command pings people with your message with the Overwatch role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**Overwatch LFT**", description = f'\n**{arg}**' + f"\n\n Overwatch LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@&818975708708864013>||')
+        o = get(ctx.guild.roles, name = f"{O}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**Overwatch LFT**", description = f'\n**{arg}**' + f"\n\n {O} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{o.mention}||')
         await channel.send(embed = embed)
     #----------
     @commands.command(pass_context = True)
     @commands.has_role('BF1')
     async def BF1ping(self,ctx,*,arg):
         '''This command pings people with your message with the BF1 role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**BF1 LFT**", description = f'\n**{arg}**' + f"\n\n BF1 LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@&819783988721745942>||')
+        bf1 = get(ctx.guild.roles, name = f"{BF1}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**BF1 LFT**", description = f'\n**{arg}**' + f"\n\n {BF1} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{bf1.mention}||')
         await channel.send(embed = embed)
     #----------
     @commands.command(pass_context = True)
     @commands.has_role('Minecraft')
     async def Minecraftping(self,ctx,*,arg):
         '''This command pings people with your message with the Minecraft role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**Minecraft LFT**", description = f'\n**{arg}**' + f"\n\n Minecraft LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@&830647386871169065>||')
+        m = get(ctx.guild.roles, name = f"{M}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**Minecraft LFT**", description = f'\n**{arg}**' + f"\n\n {M} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{m.mention}||')
         await channel.send(embed = embed)
     #----------
     @commands.command(pass_context = True)
     @commands.has_role('Doom')
     async def Doomping(self,ctx,*,arg):
         '''This command pings people with your message with the Doom role'''
-        channel = bot.get_channel(758445986816589874)
-        embed = discord.Embed(title = "**Doom LFT**", description = f'\n**{arg}**' + f"\n\n Doom LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
-        await channel.send('||<@&830647586355806218>||')
+        d = get(ctx.guild.roles, name = f"{D}")
+        channel = discord.utils.get(ctx.guild.channels, name = "looking-for-teammates")
+        embed = discord.Embed(title = "**Doom LFT**", description = f'\n**{arg}**' + f"\n\n {D} LFT initiated by {ctx.message.author}"+ f'\n\nRunning CUBEBOT {BotVerson}', color=discord.Color.blue())
+        await channel.send(f'||{d.mention}||')
         await channel.send(embed = embed)
 #-------------------------------------------------
 class Admin(commands.Cog, description="These are commands for the staff of the server."):
