@@ -8,19 +8,20 @@ import discord
 import discord.utils
 import asyncio 
 import time
+from BotTokens import *
 from dotenv import load_dotenv
 from discord.utils import get
 from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions
-from pretty_help import PrettyHelp, Navigation
+from pretty_help import PrettyHelp, DefaultMenu
 #---------
 load_dotenv()
-TOKEN = open('MAIN_SERVER_TOKEN.txt', 'r').read()
+TOKEN = MAIN
 ROLEc = 'Cubeular'
 ROLEm = 'Muted'
 ROLE9 = '9th Grader'
 ROLE10 = '10th Grader'
-BotVerson = 'V1.2.2'
+BotVerson = 'V1.2.3'
 WT = "War Thunder"
 COD = "COD"
 CSGO = "CSGO"
@@ -43,13 +44,13 @@ bot = commands.Bot(command_prefix='?', intents = intents)
 bot.remove_command('help')
 #-------------------------------------------------
 ending_note = f"Running CUBEBOT {BotVerson}"
-nav = Navigation("⏫", "⏬")
+nav = DefaultMenu()
 color = discord.Color.dark_gold()
-bot.help_command = PrettyHelp(navigation=nav, 
-index_title="Commands", 
+bot.help_command = PrettyHelp(active_time=120, 
 color=color, 
-active_time=120, 
-ending_note=ending_note,
+ending_note=ending_note, 
+index_title="Commands",
+show_index=True, 
 sort_commands=False
 )
 #-------------------------------------------------
@@ -60,62 +61,64 @@ async def on_member_join(member):
     await channel.send(embed = embed)
     role = get(member.guild.roles, name=ROLEc)
     await member.add_roles(role)
-    await member.send(f'Hi {member.name}, welcome to the CUBE Discord server!\n'
+    await member.send(f'    Hi {member.name}, welcome to the CUBE Discord server!\n'
     ''' 
         For list of commands do ?help
         Please go the the Who's-Who channel and put your real name for safety reasons.
+        Rules:''') 
 
-        Rules: 
+    await member.send(
+    '''(1)Your Account: 
 
-        (1)Your Account: 
-        1. Inappropriate or offensive avatars, usernames, and statuses are prohibited. 
-        2. Self-advertising through usernames or statuses is not permitted.
-        3. Staff are hereby granted the right to change nicknames if and only if said username or status violates rules(s) (1) or (2) of this section, or rule (1) of Section (3).
-        4. Any user may only hold one account on this server. If we suspect that a user has a secondary account, immediate action will be taken. 
+    1. Inappropriate or offensive avatars, usernames, and statuses are prohibited. 
+    2. Self-advertising through usernames or statuses is not permitted.
+    3. Staff are hereby granted the right to change nicknames if and only if said username or status violates rules(s) (1) or (2) of this section, or rule (1) of Section (3).
+    4. Any user may only hold one account on this server. If we suspect that a user has a secondary account, immediate action will be taken. 
+    
+    (2)Server Rules: 
 
-        (2)Server Rules: 
-        1. Discrimination, racist or otherwise offensive jokes, and/or hate speech through text, images, or videos will not be tolerated. 
-        2. Insults, threats, or any offensive content targeted at specific members is strictly not allowed. 
-        3. DDOS, raid, or other such threats will not be tolerated. 
-        4. Please post content in correct channels. 
-        4a. Self-promotions are only allowed in #advertising channel. 
-        5. Do not ask staff to become a moderator, all moderator applications are closed.
-        6. Impersonating staff members, including similar avatars and nicknames is not allowed.
-        7. Political opinions, including links, images, videos, avatars, nicknames, and statuses will not be tolerated. This is a school server.
-        8. Please Direct Message me or an Admin with complaints about staff/server policies.
-        9. Do not leak Direct Messages, locked chats, or sensitive information about this server. 
+    1. Discrimination, racist or otherwise offensive jokes, and/or hate speech through text, images, or videos will not be tolerated. 
+    2. Insults, threats, excessive pinging, or any offensive content targeted at specific members is strictly not allowed. 
+    3. DDOS, raid, or other such threats will not be tolerated. 
+    4. Please post content in correct channels. 
+    4a. Self-promotions are only allowed in #advertising channel. 
+    5. Do not ask staff to become a moderator, all moderator applications are closed.
+    6. Impersonating staff members, including similar avatars and nicknames is not allowed.
+    7. Political opinions, including links, images, videos, avatars, nicknames, and statuses will not be tolerated. This is a school server.
+    8. Please Direct Message me or an Admin with complaints about staff/server policies.
+    9. Do not leak Direct Messages, locked chats, or sensitive information about this server. 
+    
+    (3)Content:
 
-        (3)Content:
-        1. NSFW content, text, avatars, or usernames/nicknames of any kind is strictly prohibited. 
-        2. Discussing/promoting illegal activity will not be tolerated. 
-        3. Staff reserves the right to remove any content for any reason at any time. 
-        4. Plagiarism, spam, and copypasta are all forbidden.
+    1. NSFW content, text, avatars, or usernames/nicknames of any kind is strictly prohibited. 
+    2. Discussing/promoting illegal activity will not be tolerated. 
+    3. Staff reserves the right to remove any content for any reason at any time. 
+    4. Plagiarism, spam, and copypasta are all forbidden.''')
 
+    await member.send('''Punishment System: 
 
-    Punishment System: 
+    Tier One - Warning 
+     -Violating Section(1); rule (2). 
+     -Violating Section (2); rule(s) (4/4a), (5), (6), or (8). 
 
-        Tier One - Warning 
-        -Violating Section(1); rule (2). 
-        -Violating Section (2); rule(s) (4/4a), (5), (6), or (8). 
+    Tier Two - Mute
+     -Violating Section(2); rule(s) (1), (2), (3), or (7). 
+     -Violating Section(3); rule(s) (2) or (4).
+     -Repeated violations (<2) of the rules outlined in Tier One.
 
-        Tier Two - Mute
-        -Violating Section(2); rule(s) (1), (2), (3), or (7). 
-        -Violating Section(3); rule(s) (2) or (4).
-        -Repeated violations (<2) of the rules outlined in Tier One.
-
-        Tier Three - Kick/Role Removal
-        -Violating Section(1); rule (1).
-        -Violating Section(2); rule (9).
-        -Repeated violations (<4) of the rules outlined in Tier One. 
-        -Repeated violations (<2) of the rules outlined in Tier Two. 
+    Tier Three - Kick/Role Removal
+     -Violating Section(1); rule (1).
+     -Violating Section(2); rule (9).
+     -Repeated violations (<4) of the rules outlined in Tier One. 
+     -Repeated violations (<2) of the rules outlined in Tier Two. 
 
     Tier Four - Ban
-        -Violating Section(1); rule (4)
-        -Violating Section(3); rule (1)
-        -Repeated violations (<5) of the rules outlined in Tier One. 
-        -Repeated violations (<3) of the rules outlined in Tier Two. 
-        -Repeated violations (<1) of the rules outlined in Tier Three.
-        ''')
+     -Violating Section(1); rule (4)
+     -Violating Section(3); rule (1)
+     -Repeated violations (<5) of the rules outlined in Tier One. 
+     -Repeated violations (<3) of the rules outlined in Tier Two. 
+     -Repeated violations (<1) of the rules outlined in Tier Three.
+    ''')
 #----------
 @bot.event
 async def on_ready():
